@@ -2,6 +2,9 @@ package com.ayoprez.nextcloudgallery
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,6 +16,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.nextcloud.android.sso.helper.SingleAccountHelper
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,6 +42,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val headerView: View = navView.getHeaderView(0)
+
+        val userIdTextView: TextView = headerView.findViewById(R.id.userIdTextView)
+        val userUrlTextView: TextView = headerView.findViewById(R.id.userUrlTextView)
+        val userImageView: ImageView = headerView.findViewById(R.id.userImageView)
+
+        val currentUser = SingleAccountHelper.getCurrentSingleSignOnAccount(this)
+
+        if(!currentUser.token.isNullOrEmpty()) {
+            userIdTextView.text = currentUser.userId
+            userUrlTextView.text = currentUser.url
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

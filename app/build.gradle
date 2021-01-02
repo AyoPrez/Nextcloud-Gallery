@@ -55,4 +55,5 @@ dependencies {
 
     //Nextcloud
     implementation 'com.github.nextcloud:Android-SingleSignOn:0.5.1'
+    implementation 'com.github.nextcloud:android-library:2.4.1'
 }
